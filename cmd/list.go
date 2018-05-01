@@ -3,7 +3,9 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"os"
 
+	"github.com/fatih/color"
 	"github.com/spf13/viper"
 
 	"github.com/billglover/starling"
@@ -14,28 +16,47 @@ import (
 
 var listCmd = &cobra.Command{
 	Use:       "list",
-	Short:     "A brief description of your command",
+	Short:     "Display a list of items",
 	Args:      cobra.OnlyValidArgs,
-	ValidArgs: []string{"transactions", "contacts"},
-	Run: func(cmd *cobra.Command, args []string) {
-		listTransactions()
-	},
+	ValidArgs: []string{"transactions"},
+	Run:       list,
 }
 
 func init() {
 	rootCmd.AddCommand(listCmd)
+
+	var from string
+	var to string
+
+	listCmd.PersistentFlags().StringVar(&from, "from", "", "filter results from this date (dd/mm/yyyy)")
+	listCmd.PersistentFlags().StringVar(&to, "to", "", "filter results to this date (dd/mm/yyyy)")
+}
+
+func list(cmd *cobra.Command, args []string) {
+	if len(args) == 0 {
+		fmt.Println("missing object, you need to list something e.g. list transactions")
+		os.Exit(1)
+	}
+
+	switch args[0] {
+	case "transactions":
+		listTransactions()
+	}
 }
 
 func listTransactions() {
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: viper.GetString("token")})
 	ctx := context.Background()
 	tc := oauth2.NewClient(ctx, ts)
+	sb := starling.NewClient(tc)
+	txns, _, err := sb.Transactions(ctx, nil)
 
-	client := starling.NewClient(tc)
-
-	txns, _, _ := client.Transactions(ctx, nil)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
 	for i, txn := range *txns {
-		fmt.Println(i, txn.Created, txn.Amount, txn.Currency, txn.Narrative)
+		fmt.Printf("%s %s %10.2f %s\n", color.BlueString("%03d", i), txn.Created, txn.Amount, txn.Narrative)
 	}
 }
