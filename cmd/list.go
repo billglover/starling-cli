@@ -18,7 +18,7 @@ var listCmd = &cobra.Command{
 	Use:       "list",
 	Short:     "Display a list of items",
 	Args:      cobra.OnlyValidArgs,
-	ValidArgs: []string{"transactions", "contacts"},
+	ValidArgs: []string{"transactions", "contacts", "goals"},
 	Run:       list,
 }
 
@@ -43,6 +43,8 @@ func list(cmd *cobra.Command, args []string) {
 		listTransactions()
 	case "contacts":
 		listContacts()
+	case "goals":
+		listGoals()
 	}
 }
 
@@ -77,5 +79,24 @@ func listContacts() {
 
 	for i, c := range *cons {
 		fmt.Printf("%s %s\n", color.BlueString("%03d", i), c.Name)
+	}
+}
+
+func listGoals() {
+	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: viper.GetString("token")})
+	ctx := context.Background()
+	tc := oauth2.NewClient(ctx, ts)
+	sb := starling.NewClient(tc)
+	goals, _, err := sb.SavingsGoals(ctx)
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	for i, g := range *goals {
+		saved := float64(g.TotalSaved.MinorUnits) / 100
+		target := float64(g.Target.MinorUnits) / 100
+		fmt.Printf("%s %-20s %10.2f %10.2f %10d\n", color.BlueString("%03d", i), g.Name, saved, target, g.SavedPercentage)
 	}
 }
