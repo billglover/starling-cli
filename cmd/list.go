@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"os"
 
 	"github.com/fatih/color"
@@ -52,7 +53,11 @@ func listTransactions() {
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: viper.GetString("token")})
 	ctx := context.Background()
 	tc := oauth2.NewClient(ctx, ts)
-	sb := starling.NewClient(tc)
+
+	baseURL, _ := url.Parse(viper.GetString("url"))
+	opts := starling.ClientOptions{BaseURL: baseURL}
+	sb := starling.NewClientWithOptions(tc, opts)
+
 	txns, _, err := sb.Transactions(ctx, nil)
 
 	if err != nil {

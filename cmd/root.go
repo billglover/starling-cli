@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/billglover/starling"
+
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var cfgFile string
-var token string
 
 var rootCmd = &cobra.Command{
 	Use:   "starling-cli",
@@ -36,9 +37,13 @@ func Execute() {
 }
 
 func init() {
+	var token string
+	var env string
+
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.starling.yaml)")
 	rootCmd.PersistentFlags().StringVar(&token, "token", "", "API access token")
+	rootCmd.PersistentFlags().StringVar(&env, "env", "sandbox", "the environment you want to use: live, sandbox (default is sandbox)")
 }
 
 func initConfig() {
@@ -58,8 +63,19 @@ func initConfig() {
 	viper.AutomaticEnv()
 
 	viper.BindPFlag("token", rootCmd.Flags().Lookup("token"))
+	viper.BindPFlag("env", rootCmd.Flags().Lookup("env"))
 
 	if err := viper.ReadInConfig(); err != nil {
 		fmt.Println("Unable to read config file:", viper.ConfigFileUsed())
+	}
+
+	switch viper.GetString("env") {
+	case "live":
+		viper.Set("url", starling.ProdURL)
+	case "sandbox":
+		viper.Set("url", starling.SandboxURL)
+	default:
+		fmt.Printf("unrecognised environment specified '%s', expected 'sandbox' or 'live'\n", viper.GetString("env"))
+		os.Exit(1)
 	}
 }
