@@ -3,14 +3,9 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"net/url"
 	"os"
 
 	"github.com/fatih/color"
-	"github.com/spf13/viper"
-
-	"github.com/billglover/starling"
-	"golang.org/x/oauth2"
 
 	"github.com/spf13/cobra"
 )
@@ -50,13 +45,8 @@ func list(cmd *cobra.Command, args []string) {
 }
 
 func listTransactions() {
-	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: viper.GetString("token")})
 	ctx := context.Background()
-	tc := oauth2.NewClient(ctx, ts)
-
-	baseURL, _ := url.Parse(viper.GetString("url"))
-	opts := starling.ClientOptions{BaseURL: baseURL}
-	sb := starling.NewClientWithOptions(tc, opts)
+	sb := newClient(ctx)
 
 	txns, _, err := sb.Transactions(ctx, nil)
 
@@ -71,10 +61,8 @@ func listTransactions() {
 }
 
 func listContacts() {
-	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: viper.GetString("token")})
 	ctx := context.Background()
-	tc := oauth2.NewClient(ctx, ts)
-	sb := starling.NewClient(tc)
+	sb := newClient(ctx)
 	cons, _, err := sb.Contacts(ctx)
 
 	if err != nil {
@@ -88,10 +76,8 @@ func listContacts() {
 }
 
 func listGoals() {
-	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: viper.GetString("token")})
 	ctx := context.Background()
-	tc := oauth2.NewClient(ctx, ts)
-	sb := starling.NewClient(tc)
+	sb := newClient(ctx)
 	goals, _, err := sb.SavingsGoals(ctx)
 
 	if err != nil {

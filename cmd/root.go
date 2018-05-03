@@ -1,10 +1,13 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
+	"net/url"
 	"os"
 
 	"github.com/billglover/starling"
+	"golang.org/x/oauth2"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
@@ -78,4 +81,13 @@ func initConfig() {
 		fmt.Printf("unrecognised environment specified '%s', expected 'sandbox' or 'live'\n", viper.GetString("env"))
 		os.Exit(1)
 	}
+}
+
+func newClient(ctx context.Context) *starling.Client {
+	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: viper.GetString("token")})
+	tc := oauth2.NewClient(ctx, ts)
+
+	baseURL, _ := url.Parse(viper.GetString("url"))
+	opts := starling.ClientOptions{BaseURL: baseURL}
+	return starling.NewClientWithOptions(tc, opts)
 }
