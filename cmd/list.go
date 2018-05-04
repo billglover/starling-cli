@@ -14,7 +14,7 @@ var listCmd = &cobra.Command{
 	Use:       "list",
 	Short:     "Display a list of items",
 	Args:      cobra.OnlyValidArgs,
-	ValidArgs: []string{"transactions", "contacts", "goals"},
+	ValidArgs: []string{"transactions", "contacts", "goals", "account"},
 	Run:       list,
 }
 
@@ -35,6 +35,8 @@ func list(cmd *cobra.Command, args []string) {
 	}
 
 	switch args[0] {
+	case "account":
+		listAccount()
 	case "transactions":
 		listTransactions()
 	case "contacts":
@@ -90,4 +92,25 @@ func listGoals() {
 		target := float64(g.Target.MinorUnits) / 100
 		fmt.Printf("%s %-20s %10.2f %10.2f %10d\n", color.BlueString("%03d", i), g.Name, saved, target, g.SavedPercentage)
 	}
+}
+
+func listAccount() {
+	ctx := context.Background()
+	sb := newClient(ctx)
+	act, _, err := sb.Account(ctx)
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	key := color.New(color.FgBlue).SprintFunc()
+	fmt.Printf("%-20s %40s\n", key("Name:"), act.Name)
+	fmt.Printf("%-20s %40s\n", key("Number:"), act.AccountNumber)
+	fmt.Printf("%-20s %40s\n", key("Sort Code:"), act.SortCode)
+	fmt.Printf("%-20s %40s\n", key("BIC:"), act.BIC)
+	fmt.Printf("%-20s %40s\n", key("IBAN:"), act.IBAN)
+	fmt.Printf("%-20s %40s\n", key("Currency:"), act.Currency)
+	fmt.Printf("%-20s %40s\n", key("Created:"), act.CreatedAt)
+	fmt.Printf("%-20s %40s\n", key("UID:"), act.UID)
 }
