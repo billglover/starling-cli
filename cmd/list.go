@@ -14,7 +14,7 @@ var listCmd = &cobra.Command{
 	Use:       "list",
 	Short:     "Display a list of items",
 	Args:      cobra.OnlyValidArgs,
-	ValidArgs: []string{"transactions", "contacts", "goals", "account", "balance"},
+	ValidArgs: []string{"transactions", "contacts", "goals", "account", "balance", "card"},
 	Run:       list,
 }
 
@@ -45,6 +45,8 @@ func list(cmd *cobra.Command, args []string) {
 		listContacts()
 	case "goals":
 		listGoals()
+	case "card":
+		listCard()
 	}
 }
 
@@ -135,5 +137,24 @@ func listBalance() {
 	fmt.Printf("%-20s %10.2f\n", key("Pending:"), bal.PendingTxns)
 	fmt.Printf("%-20s %10.2f\n", key("Effective:"), bal.Effective)
 	fmt.Printf("%-20s %10s\n", key("Currency:"), bal.Currency)
+}
 
+func listCard() {
+	ctx := context.Background()
+	sb := newClient(ctx)
+	c, _, err := sb.Card(ctx)
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	key := color.New(color.FgBlue).SprintFunc()
+	fmt.Printf("%-20s %40s\n", key("Type:"), c.Type)
+	fmt.Printf("%-20s %40s\n", key("Name:"), c.NameOnCard)
+	fmt.Printf("%-20s %40s\n", key("Card Num:"), "**** **** **** "+c.LastFourDigits)
+	fmt.Printf("%-20s %40v\n", key("Enabled:"), c.Enabled)
+	fmt.Printf("%-20s %40v\n", key("Activated:"), c.Activated)
+	fmt.Printf("%-20s %40v\n", key("Cancelled:"), c.Cancelled)
+	fmt.Printf("%-20s %40s\n", key("UID:"), c.UID)
 }
