@@ -14,7 +14,7 @@ var listCmd = &cobra.Command{
 	Use:       "list",
 	Short:     "Display a list of items",
 	Args:      cobra.OnlyValidArgs,
-	ValidArgs: []string{"transactions", "contacts", "goals", "account", "balance", "card"},
+	ValidArgs: []string{"transactions", "contacts", "goals", "account", "balance", "card", "mandates"},
 	Run:       list,
 }
 
@@ -47,6 +47,8 @@ func list(cmd *cobra.Command, args []string) {
 		listGoals()
 	case "card":
 		listCard()
+	case "mandate":
+		listMandates()
 	}
 }
 
@@ -157,4 +159,19 @@ func listCard() {
 	fmt.Printf("%-20s %40v\n", key("Activated:"), c.Activated)
 	fmt.Printf("%-20s %40v\n", key("Cancelled:"), c.Cancelled)
 	fmt.Printf("%-20s %40s\n", key("UID:"), c.UID)
+}
+
+func listMandates() {
+	ctx := context.Background()
+	sb := newClient(ctx)
+	ms, _, err := sb.DirectDebitMandates(ctx)
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	for i, m := range *ms {
+		fmt.Printf("%s %-20s\n", color.BlueString("%03d", i), m.Reference)
+	}
 }
