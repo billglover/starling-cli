@@ -47,7 +47,7 @@ func list(cmd *cobra.Command, args []string) {
 		listGoals()
 	case "card":
 		listCard()
-	case "mandate":
+	case "mandates":
 		listMandates()
 	}
 }
@@ -171,7 +171,7 @@ func listMandates() {
 		os.Exit(1)
 	}
 
-	for i, m := range *ms {
-		fmt.Printf("%s %-20s\n", color.BlueString("%03d", i), m.Reference)
+	for i, m := range ms {
+		fmt.Printf("%s %-30s %-30s %-20s %-10s\n", color.BlueString("%03d", i), m.Reference, m.Created, m.OriginatorName, m.Status)
 	}
 }
