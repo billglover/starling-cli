@@ -63,8 +63,9 @@ func listTransactions() {
 		os.Exit(1)
 	}
 
+	color.Green("%3s %30s %10s %30s\n", "#", "Created", "Amount", "Narrative")
 	for i, txn := range *txns {
-		fmt.Printf("%s %s %10.2f %s\n", color.BlueString("%03d", i), txn.Created, txn.Amount, txn.Narrative)
+		fmt.Printf("%s %30s %10.2f %30s\n", color.BlueString("%03d", i), txn.Created, txn.Amount, txn.Narrative)
 	}
 }
 
@@ -78,6 +79,7 @@ func listContacts() {
 		os.Exit(1)
 	}
 
+	color.Green("%3s %s\n", "#", "Name")
 	for i, c := range *cons {
 		fmt.Printf("%s %s\n", color.BlueString("%03d", i), c.Name)
 	}
@@ -93,10 +95,11 @@ func listGoals() {
 		os.Exit(1)
 	}
 
+	color.Green("%s %-20s %10s %10s %11s\n", "  #", "Name", "Saved", "Target", "Percentage")
 	for i, g := range *goals {
 		saved := float64(g.TotalSaved.MinorUnits) / 100
 		target := float64(g.Target.MinorUnits) / 100
-		fmt.Printf("%s %-20s %10.2f %10.2f %10d\n", color.BlueString("%03d", i), g.Name, saved, target, g.SavedPercentage)
+		fmt.Printf("%s %-20s %10.2f %10.2f %10d%%\n", color.BlueString("%03d", i), g.Name, saved, target, g.SavedPercentage)
 	}
 }
 
@@ -171,6 +174,7 @@ func listMandates() {
 		os.Exit(1)
 	}
 
+	color.Green("%03s %-30s %-30s %-20s %-10s\n", "  #", "Reference", "Created", "Orignator", "Status")
 	for i, m := range ms {
 		fmt.Printf("%s %-30s %-30s %-20s %-10s\n", color.BlueString("%03d", i), m.Reference, m.Created, m.OriginatorName, m.Status)
 	}
