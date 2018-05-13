@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/spf13/viper"
+
 	"github.com/fatih/color"
 
 	"github.com/spf13/cobra"
@@ -95,11 +97,22 @@ func listGoals() {
 		os.Exit(1)
 	}
 
-	color.Green("%s %-20s %10s %10s %11s\n", "  #", "Name", "Saved", "Target", "Percentage")
-	for i, g := range *goals {
-		saved := float64(g.TotalSaved.MinorUnits) / 100
-		target := float64(g.Target.MinorUnits) / 100
-		fmt.Printf("%s %-20s %10.2f %10.2f %10d%%\n", color.BlueString("%03d", i), g.Name, saved, target, g.SavedPercentage)
+	uuid := viper.GetBool("uuid")
+
+	if uuid == true {
+		color.Green("%s %-20s %10s %10s %11s %40s\n", "  #", "Name", "Saved", "Target", "Percentage", "UID")
+		for i, g := range *goals {
+			saved := float64(g.TotalSaved.MinorUnits) / 100
+			target := float64(g.Target.MinorUnits) / 100
+			fmt.Printf("%s %-20s %10.2f %10.2f %10d%% %40s\n", color.BlueString("%03d", i), g.Name, saved, target, g.SavedPercentage, g.UID)
+		}
+	} else {
+		color.Green("%s %-20s %10s %10s %11s\n", "  #", "Name", "Saved", "Target", "Percentage")
+		for i, g := range *goals {
+			saved := float64(g.TotalSaved.MinorUnits) / 100
+			target := float64(g.Target.MinorUnits) / 100
+			fmt.Printf("%s %-20s %10.2f %10.2f %10d%%\n", color.BlueString("%03d", i), g.Name, saved, target, g.SavedPercentage)
+		}
 	}
 }
 
