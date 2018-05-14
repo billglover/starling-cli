@@ -90,9 +90,18 @@ func listContacts() {
 		os.Exit(1)
 	}
 
-	color.Green("%3s %s\n", "#", "Name")
-	for i, c := range *cons {
-		fmt.Printf("%s %s\n", color.BlueString("%03d", i), c.Name)
+	uuid := viper.GetBool("uuid")
+
+	if uuid == true {
+		color.Green("%3s %30s %40s\n", "#", "Name", "UUID")
+		for i, c := range *cons {
+			fmt.Printf("%s %30s %40s\n", color.BlueString("%03d", i), c.Name, c.UID)
+		}
+	} else {
+		color.Green("%3s %30s\n", "#", "Name")
+		for i, c := range *cons {
+			fmt.Printf("%s %30s\n", color.BlueString("%03d", i), c.Name)
+		}
 	}
 }
 
