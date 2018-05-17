@@ -16,7 +16,7 @@ var listCmd = &cobra.Command{
 	Use:       "list",
 	Short:     "Display a list of items",
 	Args:      cobra.OnlyValidArgs,
-	ValidArgs: []string{"transactions", "contacts", "goals", "account", "balance", "card", "mandates"},
+	ValidArgs: []string{"transactions", "contacts", "goals", "account", "balance", "card", "mandates", "addresses"},
 	Run:       list,
 }
 
@@ -51,6 +51,8 @@ func list(cmd *cobra.Command, args []string) {
 		listCard()
 	case "mandates":
 		listMandates()
+	case "addresses":
+		listAddresses()
 	}
 }
 
@@ -208,5 +210,33 @@ func listMandates() {
 	color.Green("%03s %-30s %-30s %-20s %-10s\n", "  #", "Reference", "Created", "Orignator", "Status")
 	for i, m := range ms {
 		fmt.Printf("%s %-30s %-30s %-20s %-10s\n", color.BlueString("%03d", i), m.Reference, m.Created, m.OriginatorName, m.Status)
+	}
+}
+
+func listAddresses() {
+	ctx := context.Background()
+	sb := newClient(ctx)
+	addrs, _, err := sb.AddressHistory(ctx)
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	cur := addrs.Current
+
+	key := color.New(color.FgBlue).SprintFunc()
+	fmt.Printf("%-20s %20s\n", key("Street:"), cur.Street)
+	fmt.Printf("%-20s %20s\n", key("City:"), cur.City)
+	fmt.Printf("%-20s %20s\n", key("Country:"), cur.Country)
+	fmt.Printf("%-20s %20s\n", key("Postcode:"), cur.Postcode)
+
+	if len(addrs.Previous) == 0 {
+		return
+	}
+
+	color.Green("%03s %-30s %-20s %-20s %-10s\n", "  #", "Street", "City", "Country", "Postcode")
+	for i, a := range addrs.Previous {
+		fmt.Printf("%s %-30s %-20s %-20s %-10ss\n", color.BlueString("%03d", i), a.Street, a.City, a.Country, a.Postcode)
 	}
 }
