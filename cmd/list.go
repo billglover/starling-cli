@@ -16,7 +16,7 @@ var listCmd = &cobra.Command{
 	Use:       "list",
 	Short:     "Display a list of items",
 	Args:      cobra.OnlyValidArgs,
-	ValidArgs: []string{"transactions", "contacts", "goals", "account", "balance", "card", "mandates", "addresses"},
+	ValidArgs: []string{"transactions", "contacts", "goals", "account", "balance", "card", "mandates", "addresses", "payments"},
 	Run:       list,
 }
 
@@ -53,6 +53,8 @@ func list(cmd *cobra.Command, args []string) {
 		listMandates()
 	case "addresses":
 		listAddresses()
+	case "payments":
+		listPayments()
 	}
 }
 
@@ -237,6 +239,28 @@ func listAddresses() {
 
 	color.Green("%03s %-30s %-20s %-20s %-10s\n", "  #", "Street", "City", "Country", "Postcode")
 	for i, a := range addrs.Previous {
-		fmt.Printf("%s %-30s %-20s %-20s %-10ss\n", color.BlueString("%03d", i), a.Street, a.City, a.Country, a.Postcode)
+		fmt.Printf("%s %-30s %-20s %-20s %-10s\n", color.BlueString("%03d", i), a.Street, a.City, a.Country, a.Postcode)
+	}
+}
+
+func listPayments() {
+	ctx := context.Background()
+	sb := newClient(ctx)
+	pos, _, err := sb.ScheduledPayments(ctx)
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	if len(pos) == 0 {
+		return
+	}
+
+	fmt.Println(len(pos))
+
+	color.Green("%03s %-30s %-20s %-20s %-10s %-10s %-10s\n", "  #", "Recipient", "Reference", "Next Payment", "Amount", "Currency", "Recurrence")
+	for i, po := range pos {
+		fmt.Printf("%s %-30s %-20s %-20s %-10.2f %-10s %-10s\n", color.BlueString("%03d", i), po.RecipientName, po.Reference, po.NextDate, po.Amount, po.Currency, po.RecurrenceRule.Frequency)
 	}
 }
