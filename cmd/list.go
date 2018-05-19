@@ -257,10 +257,17 @@ func listPayments() {
 		return
 	}
 
-	fmt.Println(len(pos))
+	uuid := viper.GetBool("uuid")
 
-	color.Green("%03s %-30s %-20s %-20s %-10s %-10s %-10s\n", "  #", "Recipient", "Reference", "Next Payment", "Amount", "Currency", "Recurrence")
-	for i, po := range pos {
-		fmt.Printf("%s %-30s %-20s %-20s %-10.2f %-10s %-10s\n", color.BlueString("%03d", i), po.RecipientName, po.Reference, po.NextDate, po.Amount, po.Currency, po.RecurrenceRule.Frequency)
+	if uuid == true {
+		color.Green("%-03s %-30s %-20s %-20s %-10s %-10s %-20s %-40s\n", "#", "Recipient", "Reference", "Next Payment", "Amount", "Currency", "Recurrence", "UUID")
+		for i, po := range pos {
+			fmt.Printf("%-s %-30s %-20s %-20s %-10.2f %-10s %-20s %-40s\n", color.BlueString("%03d", i), po.RecipientName, po.Reference, po.NextDate, po.Amount, po.Currency, po.RecurrenceRule.Frequency, po.UID)
+		}
+	} else {
+		color.Green("%-03s %-30s %-20s %-20s %-10s %-10s %-20s\n", "#", "Recipient", "Reference", "Next Payment", "Amount", "Currency", "Recurrence")
+		for i, po := range pos {
+			fmt.Printf("%s %-30s %-20s %-20s %-10.2f %-10s %-20s\n", color.BlueString("%03d", i), po.RecipientName, po.Reference, po.NextDate, po.Amount, po.Currency, po.RecurrenceRule.Frequency)
+		}
 	}
 }
