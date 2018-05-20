@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spf13/viper"
+	"github.com/billglover/starling"
 
 	"github.com/fatih/color"
-
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
+
+var txnType string
 
 var listCmd = &cobra.Command{
 	Use:       "list",
@@ -26,6 +28,7 @@ func init() {
 	var from string
 	var to string
 
+	listCmd.PersistentFlags().StringVarP(&txnType, "type", "t", "all", "the transaction type to show")
 	listCmd.PersistentFlags().StringVar(&from, "from", "", "filter results from this date (dd/mm/yyyy)")
 	listCmd.PersistentFlags().StringVar(&to, "to", "", "filter results to this date (dd/mm/yyyy)")
 }
@@ -62,7 +65,17 @@ func listTransactions() {
 	ctx := context.Background()
 	sb := newClient(ctx)
 
-	txns, _, err := sb.Transactions(ctx, nil)
+	var err error
+	var txns *[]starling.Transaction
+
+	switch txnType {
+	case "fpsIn":
+		txns, _, err = sb.FPSTransactionsIn(ctx, nil)
+	case "fpsOut":
+		txns, _, err = sb.FPSTransactionsOut(ctx, nil)
+	default:
+		txns, _, err = sb.Transactions(ctx, nil)
+	}
 
 	if err != nil {
 		fmt.Println(err)
