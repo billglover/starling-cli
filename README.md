@@ -2,9 +2,7 @@
 
 A command line client for Starling Bank
 
-The commands listed below haven't yet been implemented. I'm currently 
-experimenting with the command syntax that tries to represent common 
-banking activities in an intuitive way.
+The following commands have been implemented and should work with Starling personal accounts.
 
 ```plain
 list transactions
