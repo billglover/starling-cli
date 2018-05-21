@@ -8,11 +8,10 @@ banking activities in an intuitive way.
 
 ```plain
 list transactions
-list transactions --type dd
-list transactions --type fps-in
-list transactions --type fps-out
-list transactions --type card
-
+list transactions card
+list transactions fpsIn
+list transactions fpsOut
+list transactions dd
 list mandates
 list payments
 list contacts
@@ -22,9 +21,13 @@ list account
 list balance
 list card
 
-create contact
-create goal
-
 transfer to goal
 transfer from goal
+```
+
+## To-Do
+
+```plain
+create contact
+create goal
 ```
