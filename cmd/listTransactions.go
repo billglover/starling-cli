@@ -17,6 +17,10 @@ var listTransactionsCmd = &cobra.Command{
 }
 
 func init() {
+	var limit int
+	listCmd.PersistentFlags().IntVar(&limit, "limit", 10, "number of transactions to show")
+	viper.BindPFlag("limit", listCmd.PersistentFlags().Lookup("limit"))
+
 	listCmd.AddCommand(listTransactionsCmd)
 }
 
@@ -35,16 +39,23 @@ func listTransactions(cmd *cobra.Command, args []string) {
 		return
 	}
 
+	limit := viper.GetInt("limit")
+	if limit > len(*txns) {
+		limit = len(*txns)
+	}
+
 	uuid := viper.GetBool("uuid")
 
 	if uuid == true {
 		color.Green("%3s %30s %10s %30s %40s\n", "#", "Created", "Amount", "Narrative", "UUID")
-		for i, txn := range *txns {
+		for i := 0; i < limit; i++ {
+			txn := (*txns)[i]
 			fmt.Printf("%s %30s %10.2f %30s %40s\n", color.BlueString("%03d", i), txn.Created, txn.Amount, txn.Narrative, txn.UID)
 		}
 	} else {
 		color.Green("%3s %30s %10s %30s\n", "#", "Created", "Amount", "Narrative")
-		for i, txn := range *txns {
+		for i := 0; i < limit; i++ {
+			txn := (*txns)[i]
 			fmt.Printf("%s %30s %10.2f %30s\n", color.BlueString("%03d", i), txn.Created, txn.Amount, txn.Narrative)
 		}
 	}
