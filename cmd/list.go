@@ -12,9 +12,9 @@ import (
 
 var listCmd = &cobra.Command{
 	Use:       "list",
-	Short:     "Display a list of items",
+	Short:     "Display a list of items based on sub-command",
 	Args:      cobra.OnlyValidArgs,
-	ValidArgs: []string{"transactions", "contacts", "goals", "account", "balance", "card", "mandates", "addresses", "payments"},
+	ValidArgs: []string{"transactions", "contacts", "goals", "mandates", "addresses", "payments"},
 	Run:       list,
 }
 
@@ -35,16 +35,10 @@ func list(cmd *cobra.Command, args []string) {
 	}
 
 	switch args[0] {
-	case "account":
-		listAccount()
-	case "balance":
-		listBalance()
 	case "contacts":
 		listContacts()
 	case "goals":
 		listGoals()
-	case "card":
-		listCard()
 	case "mandates":
 		listMandates()
 	case "addresses":
@@ -106,67 +100,6 @@ func listGoals() {
 			fmt.Printf("%s %-20s %10.2f %10.2f %10d%%\n", color.BlueString("%03d", i), g.Name, saved, target, g.SavedPercentage)
 		}
 	}
-}
-
-func listAccount() {
-	ctx := context.Background()
-	sb := newClient(ctx)
-	act, _, err := sb.Account(ctx)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	key := color.New(color.FgBlue).SprintFunc()
-	fmt.Printf("%-20s %40s\n", key("Name:"), act.Name)
-	fmt.Printf("%-20s %40s\n", key("Number:"), act.AccountNumber)
-	fmt.Printf("%-20s %40s\n", key("Sort Code:"), act.SortCode)
-	fmt.Printf("%-20s %40s\n", key("BIC:"), act.BIC)
-	fmt.Printf("%-20s %40s\n", key("IBAN:"), act.IBAN)
-	fmt.Printf("%-20s %40s\n", key("Currency:"), act.Currency)
-	fmt.Printf("%-20s %40s\n", key("Created:"), act.CreatedAt)
-	fmt.Printf("%-20s %40s\n", key("UID:"), act.UID)
-}
-
-func listBalance() {
-	ctx := context.Background()
-	sb := newClient(ctx)
-	bal, _, err := sb.AccountBalance(ctx)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	key := color.New(color.FgBlue).SprintFunc()
-	fmt.Printf("%-20s %10.2f\n", key("Amount:"), bal.Amount)
-	fmt.Printf("%-20s %10.2f\n", key("Available:"), bal.Available)
-	fmt.Printf("%-20s %10.2f\n", key("Cleared:"), bal.Cleared)
-	fmt.Printf("%-20s %10.2f\n", key("Overdraft:"), bal.Overdraft)
-	fmt.Printf("%-20s %10.2f\n", key("Pending:"), bal.PendingTxns)
-	fmt.Printf("%-20s %10.2f\n", key("Effective:"), bal.Effective)
-	fmt.Printf("%-20s %10s\n", key("Currency:"), bal.Currency)
-}
-
-func listCard() {
-	ctx := context.Background()
-	sb := newClient(ctx)
-	c, _, err := sb.Card(ctx)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	key := color.New(color.FgBlue).SprintFunc()
-	fmt.Printf("%-20s %40s\n", key("Type:"), c.Type)
-	fmt.Printf("%-20s %40s\n", key("Name:"), c.NameOnCard)
-	fmt.Printf("%-20s %40s\n", key("Card Num:"), "**** **** **** "+c.LastFourDigits)
-	fmt.Printf("%-20s %40v\n", key("Enabled:"), c.Enabled)
-	fmt.Printf("%-20s %40v\n", key("Activated:"), c.Activated)
-	fmt.Printf("%-20s %40v\n", key("Cancelled:"), c.Cancelled)
-	fmt.Printf("%-20s %40s\n", key("UID:"), c.UID)
 }
 
 func listMandates() {
