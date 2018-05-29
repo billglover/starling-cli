@@ -23,7 +23,7 @@ var rootCmd = &cobra.Command{
 Bank accounts. It allows you to perform basic banking from 
 the command line. For example:
 
-	starling-cli list transactions
+	starling-cli list txns
 
 The Starling API is still under active development and until it
 stabilises there may be some instability in the functionality 

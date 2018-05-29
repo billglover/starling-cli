@@ -11,16 +11,12 @@ import (
 )
 
 var listTransactionsCmd = &cobra.Command{
-	Use:   "transactions",
-	Short: "A brief description of your command",
+	Use:   "txns",
+	Short: "List recent transactions",
 	Run:   listTransactions,
 }
 
 func init() {
-	var limit int
-	listCmd.PersistentFlags().IntVar(&limit, "limit", 10, "number of transactions to show")
-	viper.BindPFlag("limit", listCmd.PersistentFlags().Lookup("limit"))
-
 	listCmd.AddCommand(listTransactionsCmd)
 }
 
