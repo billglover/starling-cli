@@ -58,4 +58,9 @@ func listGoals(cmd *cobra.Command, args []string) {
 			fmt.Printf("%s %-20s %10.2f %10.2f %10d%%\n", color.BlueString("%03d", i), g.Name, saved, target, g.SavedPercentage)
 		}
 	}
+
+	if limit < len(*goals) {
+		color.Set(color.FgHiMagenta)
+		fmt.Printf("%d of %d savings goals\n", limit, len(*goals))
+	}
 }

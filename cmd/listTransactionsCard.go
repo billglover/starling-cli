@@ -55,4 +55,9 @@ func listTransactionsCard(cmd *cobra.Command, args []string) {
 			fmt.Printf("%s %30s %10.2f %30s\n", color.BlueString("%03d", i), txn.Created, txn.Amount, txn.Narrative)
 		}
 	}
+
+	if limit < len(*txns) {
+		color.Set(color.FgHiMagenta)
+		fmt.Printf("%d of %d transactions\n", limit, len(*txns))
+	}
 }
