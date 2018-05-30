@@ -54,4 +54,9 @@ func listPayments(cmd *cobra.Command, args []string) {
 			fmt.Printf("%s %-30s %-20s %-20s %-10.2f %-10s %-20s\n", color.BlueString("%03d", i), po.RecipientName, po.Reference, po.NextDate, po.Amount, po.Currency, po.RecurrenceRule.Frequency)
 		}
 	}
+
+	if limit < len(pos) {
+		color.Set(color.FgHiMagenta)
+		fmt.Printf("%d of %d payments\n", limit, len(pos))
+	}
 }

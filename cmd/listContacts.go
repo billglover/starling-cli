@@ -54,4 +54,9 @@ func listContacts(cmd *cobra.Command, args []string) {
 			fmt.Printf("%s %30s\n", color.BlueString("%03d", i), c.Name)
 		}
 	}
+
+	if limit < len(*cons) {
+		color.Set(color.FgHiMagenta)
+		fmt.Printf("%d of %d contacts\n", limit, len(*cons))
+	}
 }

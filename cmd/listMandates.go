@@ -44,4 +44,9 @@ func listMandates(cmd *cobra.Command, args []string) {
 		m := ms[i]
 		fmt.Printf("%s %-30s %-30s %-20s %-10s\n", color.BlueString("%03d", i), m.Reference, m.Created, m.OriginatorName, m.Status)
 	}
+
+	if limit < len(ms) {
+		color.Set(color.FgHiMagenta)
+		fmt.Printf("%d of %d mandates\n", limit, len(ms))
+	}
 }

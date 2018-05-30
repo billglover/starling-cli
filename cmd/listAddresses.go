@@ -52,4 +52,9 @@ func listAddresses(cmd *cobra.Command, args []string) {
 		a := addrs.Previous[i]
 		fmt.Printf("%s %-30s %-20s %-20s %-10s\n", color.BlueString("%03d", i), a.Street, a.City, a.Country, a.Postcode)
 	}
+
+	if limit < len(addrs.Previous) {
+		color.Set(color.FgHiMagenta)
+		fmt.Printf("%d of %d previous addresses\n", limit, len(addrs.Previous))
+	}
 }
