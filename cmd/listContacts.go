@@ -30,13 +30,13 @@ func listContacts(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	if len(*cons) == 0 {
+	if len(cons) == 0 {
 		return
 	}
 
 	limit := viper.GetInt("limit")
-	if limit > len(*cons) {
-		limit = len(*cons)
+	if limit > len(cons) {
+		limit = len(cons)
 	}
 
 	uuid := viper.GetBool("uuid")
@@ -44,19 +44,19 @@ func listContacts(cmd *cobra.Command, args []string) {
 	if uuid == true {
 		color.Green("%3s %30s %40s\n", "#", "Name", "UUID")
 		for i := 0; i < limit; i++ {
-			c := (*cons)[i]
+			c := cons[i]
 			fmt.Printf("%s %30s %40s\n", color.BlueString("%03d", i), c.Name, c.UID)
 		}
 	} else {
 		color.Green("%3s %30s\n", "#", "Name")
 		for i := 0; i < limit; i++ {
-			c := (*cons)[i]
+			c := cons[i]
 			fmt.Printf("%s %30s\n", color.BlueString("%03d", i), c.Name)
 		}
 	}
 
-	if limit < len(*cons) {
+	if limit < len(cons) {
 		color.Set(color.FgHiMagenta)
-		fmt.Printf("%d of %d contacts\n", limit, len(*cons))
+		fmt.Printf("%d of %d contacts\n", limit, len(cons))
 	}
 }
