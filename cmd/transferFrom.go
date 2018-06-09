@@ -9,6 +9,7 @@ import (
 	"github.com/billglover/starling"
 	"github.com/google/uuid"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var transferFromCmd = &cobra.Command{
@@ -37,7 +38,7 @@ func transferFrom(cmd *cobra.Command, args []string) {
 
 	amt := starling.Amount{
 		MinorUnits: int64(100 * val),
-		Currency:   "GBP",
+		Currency:   viper.GetString("currency"),
 	}
 
 	ctx := context.Background()
