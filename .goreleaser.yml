@@ -27,8 +27,6 @@ brew:
     name: Bill Glover
     email: bill@billglover.co.uk
   folder: Formula
-  build_dependencies:
-    - golang
 
 release:
   prerelease: true 
