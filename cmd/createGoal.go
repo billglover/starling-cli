@@ -24,6 +24,10 @@ func init() {
 	createGoalCmd.Flags().StringVar(&name, "name", "", "name of the saving goal you want to create")
 	viper.BindPFlag("name", createGoalCmd.Flags().Lookup("name"))
 
+	var target float64
+	createGoalCmd.Flags().Float64Var(&target, "target", 0.0, "target amount for the savings goal")
+	viper.BindPFlag("target", createGoalCmd.Flags().Lookup("target"))
+
 	createCmd.AddCommand(createGoalCmd)
 }
 
@@ -37,9 +41,16 @@ func createGoal(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
+	amount := new(starling.Amount)
+	if viper.GetFloat64("target") != 0.0 {
+		amount.Currency = viper.GetString("currency")
+		amount.MinorUnits = int64(viper.GetFloat64("target") * 100)
+	}
+
 	sgr := starling.SavingsGoalRequest{
 		Name:     viper.GetString("name"),
 		Currency: viper.GetString("currency"),
+		Target:   *amount,
 	}
 
 	_, err = sb.CreateSavingsGoal(ctx, uid.String(), sgr)
