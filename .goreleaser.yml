@@ -1,0 +1,42 @@
+builds:
+  - binary: starling-cli
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+before:
+  hooks:
+    # the windows build requires the mousetrap package
+    - "env GOOS=windows go get -u github.com/inconshreveable/mousetrap"
+archive:
+  replacements:
+    darwin: macOS
+    386: 32-bit
+    amd64: 64-bit
+  format: tar.gz
+  format_overrides:
+    - goos: windows
+      format: zip
+brew:
+  github:
+    owner: billglover
+    name: homebrew-tap
+  commit_author:
+    name: Bill Glover
+    email: bill@billglover.co.uk
+  folder: Formula
+  build_dependencies:
+    - golang
+
+release:
+  prerelease: true 
+
+changelog:
+  filters:
+    exclude:
+      - '^docs:'
+      - typo
+      - (?i)foo
+  sort: asc
