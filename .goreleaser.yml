@@ -3,13 +3,9 @@ builds:
     goos:
       - darwin
       - linux
-      - windows
     goarch:
       - amd64
-before:
-  hooks:
-    # the windows build requires the mousetrap package
-    - "env GOOS=windows go get -u github.com/inconshreveable/mousetrap"
+
 archive:
   replacements:
     darwin: macOS
@@ -19,6 +15,7 @@ archive:
   format_overrides:
     - goos: windows
       format: zip
+
 brew:
   github:
     owner: billglover
@@ -27,7 +24,6 @@ brew:
     name: Bill Glover
     email: bill@billglover.co.uk
   folder: Formula
-
 release:
   prerelease: true 
 
