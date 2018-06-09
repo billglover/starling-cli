@@ -23,6 +23,7 @@ func init() {
 	var name string
 	createGoalCmd.Flags().StringVar(&name, "name", "", "name of the saving goal you want to create")
 	viper.BindPFlag("name", createGoalCmd.Flags().Lookup("name"))
+	createGoalCmd.MarkFlagRequired("name")
 
 	var target float64
 	createGoalCmd.Flags().Float64Var(&target, "target", 0.0, "target amount for the savings goal")
