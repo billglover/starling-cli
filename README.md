@@ -1,5 +1,7 @@
 # starling-cli
 
+[![Build Status](https://travis-ci.com/billglover/starling-cli.svg?branch=master)](https://travis-ci.com/billglover/starling-cli)
+
 A command line client for Starling Bank
 
 The following commands have been implemented and should work with Starling personal accounts.
