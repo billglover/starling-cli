@@ -56,13 +56,13 @@ func createContact(cmd *cobra.Command, args []string) {
 		SortCode:      viper.GetString("sort-code"),
 	}
 
-	_, err = sb.CreateContactAccount(ctx, ca)
+	cid, _, err := sb.CreateContactAccount(ctx, ca)
 	if err != nil {
 		fmt.Println("unable to create contact account:", err)
 		os.Exit(1)
 	}
 
 	if viper.GetBool("uuid") == true {
-		fmt.Println(uid)
+		fmt.Println(cid)
 	}
 }
