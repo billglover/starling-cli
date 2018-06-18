@@ -17,6 +17,7 @@ var createContactCmd = &cobra.Command{
 	Short:   "Create a contact account",
 	Aliases: []string{"c"},
 	Run:     createContact,
+	Args:    cobra.NoArgs,
 }
 
 func init() {
