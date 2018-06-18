@@ -20,7 +20,7 @@ func init() {
 }
 
 func create(cmd *cobra.Command, args []string) {
-	fmt.Printf("Error: invalid command \"%s\" provided\n\n", args[0])
+	fmt.Printf("Error: invalid command \"%s\" provided\n", args[0])
 	cmd.Usage()
 	os.Exit(1)
 }
