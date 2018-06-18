@@ -11,6 +11,7 @@ var createCmd = &cobra.Command{
 	Use:     "create",
 	Short:   "Create things like goals, payees, etc.",
 	Aliases: []string{"c"},
+	Args:    cobra.MinimumNArgs(1),
 	Run:     create,
 }
 
@@ -19,8 +20,7 @@ func init() {
 }
 
 func create(cmd *cobra.Command, args []string) {
-	if len(args) == 0 {
-		fmt.Println("missing object, you need to create something e.g. goal")
-		os.Exit(1)
-	}
+	fmt.Printf("Error: invalid command \"%s\" provided\n\n", args[0])
+	cmd.Usage()
+	os.Exit(1)
 }
