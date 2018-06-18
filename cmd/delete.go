@@ -11,6 +11,7 @@ var deleteCmd = &cobra.Command{
 	Use:     "delete",
 	Short:   "Delete things like goals, payees, etc.",
 	Aliases: []string{"d"},
+	Args:    cobra.MinimumNArgs(1),
 	Run:     delete,
 }
 
@@ -19,8 +20,7 @@ func init() {
 }
 
 func delete(cmd *cobra.Command, args []string) {
-	if len(args) == 0 {
-		fmt.Println("missing object, you need to delete something e.g. goal")
-		os.Exit(1)
-	}
+	fmt.Printf("Error: invalid command \"%s\" provided\n", args[0])
+	cmd.Usage()
+	os.Exit(1)
 }
