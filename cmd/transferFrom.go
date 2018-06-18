@@ -14,7 +14,8 @@ import (
 
 var transferFromCmd = &cobra.Command{
 	Use:   "from",
-	Short: "A brief description of your command",
+	Short: "Transfer money from a savings goal",
+	Args:  cobra.ExactArgs(2),
 	Run:   transferFrom,
 }
 
