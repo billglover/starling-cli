@@ -14,6 +14,7 @@ var listPaymentsCmd = &cobra.Command{
 	Use:   "payments",
 	Short: "List payments",
 	Run:   listPayments,
+	Args:  cobra.NoArgs,
 }
 
 func init() {
