@@ -21,6 +21,12 @@ func init() {
 }
 
 func listTransactions(cmd *cobra.Command, args []string) {
+	if len(args) > 0 {
+		fmt.Printf("Error: invalid command \"%s\" provided\n", args[0])
+		cmd.Usage()
+		os.Exit(1)
+	}
+
 	ctx := context.Background()
 	sb := newClient(ctx)
 
