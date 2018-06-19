@@ -14,6 +14,7 @@ var listMandatesCmd = &cobra.Command{
 	Use:   "mandates",
 	Short: "List Direct Debit mandates",
 	Run:   listMandates,
+	Args:  cobra.NoArgs,
 }
 
 func init() {
