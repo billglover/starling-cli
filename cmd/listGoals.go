@@ -14,6 +14,7 @@ var listGoalsCmd = &cobra.Command{
 	Use:   "goals",
 	Short: "List savings goals",
 	Run:   listGoals,
+	Args:  cobra.NoArgs,
 }
 
 func init() {

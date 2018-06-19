@@ -14,6 +14,7 @@ var listTransactionsDDCmd = &cobra.Command{
 	Use:   "dd",
 	Short: "List direct-debit transactions",
 	Run:   listTransactionsDD,
+	Args:  cobra.NoArgs,
 }
 
 func init() {

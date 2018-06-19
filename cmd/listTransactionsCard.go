@@ -14,6 +14,7 @@ var listTransactionsCardCmd = &cobra.Command{
 	Use:   "card",
 	Short: "List card transactions",
 	Run:   listTransactionsCard,
+	Args:  cobra.NoArgs,
 }
 
 func init() {

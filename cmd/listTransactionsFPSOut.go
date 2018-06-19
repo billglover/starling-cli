@@ -14,6 +14,7 @@ var listTransactionsFPSOutCmd = &cobra.Command{
 	Use:   "fpsOut",
 	Short: "List outbound faster payments transactions",
 	Run:   listTransactionsFPSOut,
+	Args:  cobra.NoArgs,
 }
 
 func init() {

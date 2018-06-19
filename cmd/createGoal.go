@@ -17,6 +17,7 @@ var createGoalCmd = &cobra.Command{
 	Short:   "Create a savings goal",
 	Aliases: []string{"g"},
 	Run:     createGoal,
+	Args:    cobra.NoArgs,
 }
 
 func init() {

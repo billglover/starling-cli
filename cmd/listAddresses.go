@@ -14,6 +14,7 @@ var listAddressesCmd = &cobra.Command{
 	Use:   "addresses",
 	Short: "List addresses",
 	Run:   listAddresses,
+	Args:    cobra.NoArgs,
 }
 
 func init() {

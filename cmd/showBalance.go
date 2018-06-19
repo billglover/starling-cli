@@ -13,6 +13,7 @@ var showBalanceCmd = &cobra.Command{
 	Use:   "balance",
 	Short: "Show a summary of your balance",
 	Run:   showBalance,
+	Args:  cobra.NoArgs,
 }
 
 func init() {

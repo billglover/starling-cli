@@ -14,6 +14,7 @@ var listTransactionsFPSInCmd = &cobra.Command{
 	Use:   "fpsIn",
 	Short: "List inbound faster payments transactions",
 	Run:   listTransactionsFPSIn,
+	Args:  cobra.NoArgs,
 }
 
 func init() {

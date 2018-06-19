@@ -13,6 +13,7 @@ var showAccountCmd = &cobra.Command{
 	Use:   "account",
 	Short: "Show an account summary",
 	Run:   showAccount,
+	Args:  cobra.NoArgs,
 }
 
 func init() {
