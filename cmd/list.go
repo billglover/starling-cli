@@ -11,6 +11,7 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Display a list of items based on sub-command",
+	Args:  cobra.MinimumNArgs(1),
 	Run:   list,
 }
 
@@ -28,8 +29,7 @@ func init() {
 }
 
 func list(cmd *cobra.Command, args []string) {
-	if len(args) == 0 {
-		fmt.Println("missing object, you need to list something e.g. list txns")
-		os.Exit(1)
-	}
+	fmt.Printf("Error: invalid command \"%s\" provided\n", args[0])
+	cmd.Usage()
+	os.Exit(1)
 }
