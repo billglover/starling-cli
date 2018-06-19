@@ -14,6 +14,7 @@ var listContactsCmd = &cobra.Command{
 	Use:   "contacts",
 	Short: "List contacts",
 	Run:   listContacts,
+	Args:  cobra.NoArgs,
 }
 
 func init() {
