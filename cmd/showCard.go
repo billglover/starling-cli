@@ -13,6 +13,7 @@ var showCardCmd = &cobra.Command{
 	Use:   "card",
 	Short: "Show your card details",
 	Run:   showCard,
+	Args:  cobra.NoArgs,
 }
 
 func init() {
