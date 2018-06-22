@@ -4,8 +4,8 @@
 [[projects]]
   name = "github.com/billglover/starling"
   packages = ["."]
-  revision = "139d4022b14012093e79e5b9ac67caae9e0c923e"
-  version = "0.0.2"
+  revision = "8bf27dc6e25971fa41990fe1a578ce6b7e220ef4"
+  version = "0.0.3"
 
 [[projects]]
   name = "github.com/fatih/color"
@@ -195,6 +195,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "05d6bb346ae2816385110df5943584e3edc92c93286bdc47c4d64b6ec454365f"
+  inputs-digest = "180ee4bf226072b2c8d416fe7fa82fb96a815c91705b1f05ee7c9a9a83e37f9b"
   solver-name = "gps-cdcl"
   solver-version = 1
