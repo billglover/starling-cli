@@ -3,7 +3,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -25,11 +24,7 @@ func listMandates(cmd *cobra.Command, args []string) {
 	ctx := context.Background()
 	sb := newClient(ctx)
 	ms, _, err := sb.DirectDebitMandates(ctx)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	check(err, "unable to list mandates")
 
 	if len(ms) == 0 {
 		return

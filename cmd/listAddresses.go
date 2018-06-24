@@ -3,7 +3,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -14,7 +13,7 @@ var listAddressesCmd = &cobra.Command{
 	Use:   "addresses",
 	Short: "List addresses",
 	Run:   listAddresses,
-	Args:    cobra.NoArgs,
+	Args:  cobra.NoArgs,
 }
 
 func init() {
@@ -25,11 +24,7 @@ func listAddresses(cmd *cobra.Command, args []string) {
 	ctx := context.Background()
 	sb := newClient(ctx)
 	addrs, _, err := sb.AddressHistory(ctx)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	check(err, "unable to list addresses")
 
 	cur := addrs.Current
 

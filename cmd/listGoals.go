@@ -3,7 +3,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -25,11 +24,7 @@ func listGoals(cmd *cobra.Command, args []string) {
 	ctx := context.Background()
 	sb := newClient(ctx)
 	goals, _, err := sb.SavingsGoals(ctx)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	check(err, "unable to list savings goals")
 
 	if len(goals) == 0 {
 		return

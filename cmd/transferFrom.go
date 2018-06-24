@@ -46,10 +46,7 @@ func transferFrom(cmd *cobra.Command, args []string) {
 	sb := newClient(ctx)
 
 	result, _, err := sb.Withdraw(ctx, goalID.String(), amt)
-	if err != nil {
-		fmt.Println("Unable to transfer funds from the savings goal:", err)
-		os.Exit(1)
-	}
+	check(err, "unable to transfer funds from savings goal")
 
-	fmt.Println("Transfer complete:", result)
+	fmt.Println("transfer complete:", result)
 }

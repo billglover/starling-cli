@@ -3,7 +3,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -26,11 +25,7 @@ func listTransactionsFPSIn(cmd *cobra.Command, args []string) {
 	sb := newClient(ctx)
 
 	txns, _, err := sb.FPSTransactionsIn(ctx, nil)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	check(err, "unable to list inbound FPS transactions")
 
 	if len(txns) == 0 {
 		return

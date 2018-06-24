@@ -31,11 +31,7 @@ func listTransactions(cmd *cobra.Command, args []string) {
 	sb := newClient(ctx)
 
 	txns, _, err := sb.Transactions(ctx, nil)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	check(err, "unable to list transactions")
 
 	if len(txns) == 0 {
 		return
