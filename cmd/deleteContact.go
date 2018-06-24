@@ -31,9 +31,6 @@ func deleteContact(cmd *cobra.Command, args []string) {
 	ctx := context.Background()
 	sb := newClient(ctx)
 
-	resp, err := sb.DeleteContact(ctx, contactUID.String())
-	if err != nil {
-		fmt.Println("unable to delete contact:", resp.Status, err)
-		os.Exit(1)
-	}
+	_, err = sb.DeleteContact(ctx, contactUID.String())
+	check(err, "unable to delete contact")
 }

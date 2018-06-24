@@ -3,7 +3,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -24,11 +23,7 @@ func showBalance(cmd *cobra.Command, args []string) {
 	ctx := context.Background()
 	sb := newClient(ctx)
 	bal, _, err := sb.AccountBalance(ctx)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	check(err, "unable to show balance")
 
 	key := color.New(color.FgBlue).SprintFunc()
 	fmt.Printf("%-20s %10.2f\n", key("Amount:"), bal.Amount)

@@ -56,10 +56,7 @@ func createGoal(cmd *cobra.Command, args []string) {
 	}
 
 	_, err = sb.CreateSavingsGoal(ctx, uid.String(), sgr)
-	if err != nil {
-		fmt.Println("unable to create savings goal:", err)
-		os.Exit(1)
-	}
+	check(err, "unable to create savings goal")
 
 	if viper.GetBool("uuid") == true {
 		fmt.Println(uid)

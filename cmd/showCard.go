@@ -3,7 +3,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -24,11 +23,7 @@ func showCard(cmd *cobra.Command, args []string) {
 	ctx := context.Background()
 	sb := newClient(ctx)
 	c, _, err := sb.Card(ctx)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	check(err, "unable to show cared details")
 
 	key := color.New(color.FgBlue).SprintFunc()
 	fmt.Printf("%-20s %40s\n", key("Type:"), c.Type)

@@ -58,10 +58,7 @@ func createContact(cmd *cobra.Command, args []string) {
 	}
 
 	cid, _, err := sb.CreateContactAccount(ctx, ca)
-	if err != nil {
-		fmt.Println("unable to create contact account:", err)
-		os.Exit(1)
-	}
+	check(err, "unable to create contact")
 
 	if viper.GetBool("uuid") == true {
 		fmt.Println(cid)
