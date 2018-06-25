@@ -16,9 +16,4 @@ func init() {
 	viper.BindPFlag("limit", listCmd.PersistentFlags().Lookup("limit"))
 
 	rootCmd.AddCommand(listCmd)
-
-	var from string
-	var to string
-	listCmd.PersistentFlags().StringVar(&from, "from", "", "filter results from this date (dd/mm/yyyy)")
-	listCmd.PersistentFlags().StringVar(&to, "to", "", "filter results to this date (dd/mm/yyyy)")
 }
