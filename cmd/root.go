@@ -44,10 +44,14 @@ func init() {
 	var env string
 	var uuid bool
 	var cur string
+	var account string
+	var category string
 
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.starling.yaml)")
 	rootCmd.PersistentFlags().StringVar(&token, "token", "", "API access token")
+	rootCmd.PersistentFlags().StringVar(&account, "account", "", "account UID")
+	rootCmd.PersistentFlags().StringVar(&category, "category", "", "default category UID")
 	rootCmd.PersistentFlags().StringVar(&env, "env", "sandbox", "the environment you want to use: live, sandbox")
 	rootCmd.PersistentFlags().StringVar(&cur, "currency", "GBP", "the currency you are using")
 	rootCmd.PersistentFlags().BoolVar(&uuid, "uuid", false, "display UUID for objects")
@@ -70,6 +74,8 @@ func initConfig() {
 	viper.AutomaticEnv()
 
 	viper.BindPFlag("token", rootCmd.Flags().Lookup("token"))
+	viper.BindPFlag("account", rootCmd.Flags().Lookup("account"))
+	viper.BindPFlag("category", rootCmd.Flags().Lookup("category"))
 	viper.BindPFlag("env", rootCmd.Flags().Lookup("env"))
 	viper.BindPFlag("uuid", rootCmd.Flags().Lookup("uuid"))
 	viper.BindPFlag("currency", rootCmd.Flags().Lookup("currency"))
