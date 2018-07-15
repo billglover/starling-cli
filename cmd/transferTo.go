@@ -47,7 +47,7 @@ func transferTo(cmd *cobra.Command, args []string) {
 	ctx := context.Background()
 	sb := newClient(ctx)
 
-	result, _, err := sb.AddMoney(ctx, goalID.String(), amt)
+	result, _, err := sb.TransferToSavingsGoal(ctx, goalID.String(), amt)
 	check(err, "unable to transfer funds to savings goal")
 
 	fmt.Println("transfer complete:", result)
