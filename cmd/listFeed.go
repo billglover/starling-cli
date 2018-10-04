@@ -51,13 +51,13 @@ func listFeed(cmd *cobra.Command, args []string) {
 		color.Green("%-3s %-35s %-10s %-42s %-40s\n", "#", "Time", "Amount", "Reference", "UUID")
 		for i := 0; i < limit; i++ {
 			item := items[i]
-			fmt.Printf("%s %-35s %-10.2f %-42s %-40s\n", color.BlueString("%03d", i), item.TransactionTime, float64(item.Amount.MinorUnits)/100, item.Reference, item.FeedItemUID)
+			fmt.Printf("%s %-35s %-10.2f %-42s %-40s\n", color.BlueString("%03d", i), item.TransactionTime.Format(defaultTimeFormat), float64(item.Amount.MinorUnits)/100, item.Reference, item.FeedItemUID)
 		}
 	} else {
 		color.Green("%-3s %-35s %-10s %-42s\n", "#", "Created", "Amount", "Reference")
 		for i := 0; i < limit; i++ {
 			item := items[i]
-			fmt.Printf("%s %-35s %-10.2f %-42s\n", color.BlueString("%03d", i), item.TransactionTime, float64(item.Amount.MinorUnits)/100, item.Reference)
+			fmt.Printf("%s %-35s %-10.2f %-42s\n", color.BlueString("%03d", i), item.TransactionTime.Format(defaultTimeFormat), float64(item.Amount.MinorUnits)/100, item.Reference)
 		}
 	}
 
