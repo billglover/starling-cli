@@ -16,8 +16,6 @@ var listFeedCmd = &cobra.Command{
 	Run:   listFeed,
 }
 
-var defaultTimeFormat = "2006-01-02 15:04:05.000 +0000 MST"
-
 func init() {
 	listCmd.AddCommand(listFeedCmd)
 }
