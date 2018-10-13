@@ -13,6 +13,7 @@ import (
 var listFeedCmd = &cobra.Command{
 	Use:   "feed",
 	Short: "List recent feed items",
+	Aliases: []string{"f"},
 	Run:   listFeed,
 }
 

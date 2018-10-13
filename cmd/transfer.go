@@ -6,6 +6,7 @@ import (
 
 var transferCmd = &cobra.Command{
 	Use:   "transfer",
+	Aliases: []string{"t"},
 	Short: "Transfer money to/from a savings goal",
 	Args:  cobra.MinimumNArgs(1),
 }

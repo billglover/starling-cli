@@ -12,6 +12,7 @@ import (
 var listPaymentsCmd = &cobra.Command{
 	Use:   "payments",
 	Short: "List payments",
+	Aliases: []string{"p"},
 	Run:   listPayments,
 	Args:  cobra.NoArgs,
 }

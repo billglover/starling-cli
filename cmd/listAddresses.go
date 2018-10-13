@@ -12,6 +12,7 @@ import (
 var listAddressesCmd = &cobra.Command{
 	Use:   "addresses",
 	Short: "List addresses",
+	Aliases: []string{"a"},
 	Run:   listAddresses,
 	Args:  cobra.NoArgs,
 }

@@ -12,6 +12,7 @@ import (
 var listMandatesCmd = &cobra.Command{
 	Use:   "mandates",
 	Short: "List Direct Debit mandates",
+	Aliases: []string{"m"},
 	Run:   listMandates,
 	Args:  cobra.NoArgs,
 }

@@ -13,6 +13,7 @@ import (
 var listTransactionsCmd = &cobra.Command{
 	Use:   "txns",
 	Short: "List recent transactions",
+	Aliases: []string{"t"},
 	Run:   listTransactions,
 }
 

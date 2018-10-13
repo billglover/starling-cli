@@ -8,6 +8,7 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Display a list of items based on sub-command",
+	Aliases: []string{"l"},
 }
 
 func init() {

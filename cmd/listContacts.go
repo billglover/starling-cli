@@ -12,6 +12,7 @@ import (
 var listContactsCmd = &cobra.Command{
 	Use:   "contacts",
 	Short: "List contacts",
+	Aliases: []string{"c"},
 	Run:   listContacts,
 	Args:  cobra.NoArgs,
 }

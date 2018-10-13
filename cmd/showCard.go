@@ -11,6 +11,7 @@ import (
 var showCardCmd = &cobra.Command{
 	Use:   "card",
 	Short: "Show your card details",
+	Aliases: []string{"c"},
 	Run:   showCard,
 	Args:  cobra.NoArgs,
 }
