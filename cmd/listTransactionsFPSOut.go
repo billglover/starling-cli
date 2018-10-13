@@ -12,6 +12,7 @@ import (
 var listTransactionsFPSOutCmd = &cobra.Command{
 	Use:   "fpsOut",
 	Short: "List outbound faster payments transactions",
+	Aliases: []string{"o"},
 	Run:   listTransactionsFPSOut,
 	Args:  cobra.NoArgs,
 }

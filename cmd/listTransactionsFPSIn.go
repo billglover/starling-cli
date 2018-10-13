@@ -12,6 +12,7 @@ import (
 var listTransactionsFPSInCmd = &cobra.Command{
 	Use:   "fpsIn",
 	Short: "List inbound faster payments transactions",
+	Aliases: []string{"i"},
 	Run:   listTransactionsFPSIn,
 	Args:  cobra.NoArgs,
 }

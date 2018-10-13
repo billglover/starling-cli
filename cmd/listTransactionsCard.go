@@ -12,6 +12,7 @@ import (
 var listTransactionsCardCmd = &cobra.Command{
 	Use:   "card",
 	Short: "List card transactions",
+	Aliases: []string{"c"},
 	Run:   listTransactionsCard,
 	Args:  cobra.NoArgs,
 }

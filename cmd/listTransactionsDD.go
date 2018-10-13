@@ -12,6 +12,7 @@ import (
 var listTransactionsDDCmd = &cobra.Command{
 	Use:   "dd",
 	Short: "List direct-debit transactions",
+	Aliases: []string{"d"},
 	Run:   listTransactionsDD,
 	Args:  cobra.NoArgs,
 }
