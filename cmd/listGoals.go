@@ -12,6 +12,7 @@ import (
 var listGoalsCmd = &cobra.Command{
 	Use:   "goals",
 	Short: "List savings goals",
+	Aliases: []string{"g"},
 	Run:   listGoals,
 	Args:  cobra.NoArgs,
 }

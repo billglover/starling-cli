@@ -11,6 +11,7 @@ import (
 var showBalanceCmd = &cobra.Command{
 	Use:   "balance",
 	Short: "Show a summary of your balance",
+	Aliases: []string{"b"},
 	Run:   showBalance,
 	Args:  cobra.NoArgs,
 }

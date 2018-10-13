@@ -11,6 +11,7 @@ import (
 var showAccountCmd = &cobra.Command{
 	Use:   "account",
 	Short: "Show an account summary",
+	Aliases: []string{"a"},
 	Run:   showAccount,
 	Args:  cobra.NoArgs,
 }

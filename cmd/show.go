@@ -7,6 +7,7 @@ import (
 var showCmd = &cobra.Command{
 	Use:   "show",
 	Short: "Display a table of information based on sub-command",
+	Aliases: []string{"s"},
 	Long: `Show is a command that queries the Starling Bank API and displays a 
 table of information based on the associated sub-command. For example:
 
